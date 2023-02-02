@@ -22,7 +22,7 @@ function handleAdd() {
     <form @submit.prevent="handleAdd()" class="bg-white p-4  mx-4 rounded-xl" @click.stop>
         <div class="flex items-center justify-between"> 
             <div class="font-medium text-lg text-black">
-                Add Title
+              Update Title
             </div>
             <div class="cursor-pointer" @click="$emit('close-modal')" @keypress="'close-modal'">
               <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><path d="m6 6 20 20" /><path d="m26 6-20 20" /></svg>

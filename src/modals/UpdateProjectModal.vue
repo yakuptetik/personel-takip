@@ -1,8 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
+import {useProjectStore} from '../store/project';
+
+const projectStore = useProjectStore();
+
+const name = ref('');
 
 
-const name = ref('')
+const props = defineProps({
+	project: Object
+});
+
+
+onMounted(() => {
+	if (props.post) {
+		form.value = props.post;
+	}
+});
+
 
 const isEnterLoading = ref(false);
 
@@ -11,18 +26,28 @@ const emit = defineEmits([
 ]);
 
 
-function handleAdd() {
+function handleUpdate() {
 	isEnterLoading.value = true;
+	projectStore.updateProject({ name: name.value })
+		.then(() => {
+      setTimeout(() => {
+        emit('close-modal');
+      }, 1000)
+		})
+		.catch((err) => {
+      console.log(err);
+		});
 }
+
 </script>
 
 <template>
 
-<div class="flex justify-center bg-[#000000c7] fixed items-center pt-5 top-0 bottom-0 right-0 left-0 z-30" @click="$emit('close-modal')" @keypress="'close-modal'">
-    <form @submit.prevent="handleAdd()" class="bg-white p-4  mx-4 rounded-xl" @click.stop>
+<div class="flex justify-start bg-[#000000c7]  fixed items-center pt-5 top-0 bottom-0 right-0 left-0 z-30 pl-10" @click="$emit('close-modal')" @keypress="'close-modal'">
+    <form @submit.prevent="handleUpdate()" class="bg-white p-4  mx-4 rounded-xl" @click.stop>
         <div class="flex items-center justify-between"> 
             <div class="font-medium text-lg text-black">
-                Add Title
+                Update Project
             </div>
             <div class="cursor-pointer" @click="$emit('close-modal')" @keypress="'close-modal'">
               <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><path d="m6 6 20 20" /><path d="m26 6-20 20" /></svg>
@@ -30,13 +55,13 @@ function handleAdd() {
         </div>
         <div class="flex items-center justify-center gap-10 mt-3">
             <div class="w-full">
-            <input
-              required
-              v-model="name"
-              type="text"
-              placeholder="Title..."
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-            >
+                <input
+                  required
+                  v-model="name"
+                  type="text"
+                  placeholder="Project..."
+                  class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                >
           </div>
 
       <button type="submit" class="cursor-pointer ">

@@ -15,5 +15,11 @@
       active-class="text-blue-600 border-b-blue-600 border-b border-t-transparent border-t">
       Data Page
     </router-link>
+    <router-link
+      to="/login"
+      class="hover:text-blue-600 hover:border-b hover:border-b-blue-600 hover:border-t hover:border-t-transparent items-center flex justify-center py-2 px-4"
+      active-class="text-blue-600 border-b-blue-600 border-b border-t-transparent border-t">
+      Login
+    </router-link>
   </div>
 </template>

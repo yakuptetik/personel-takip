@@ -19,7 +19,7 @@ function handleAdd() {
 
 <template>
 
-<div class="flex justify-end bg-[#00000086]  fixed items-center pt-5 top-0 bottom-0 right-0 left-0 z-30 pr-10" @click="$emit('close-modal')" @keypress="'close-modal'">
+<div class="flex justify-end bg-[#000000c7] fixed items-center pt-5 top-0 bottom-0 right-0 left-0 z-30 pr-10" @click="$emit('close-modal')" @keypress="'close-modal'">
     <form @submit.prevent="handleAdd()" class="bg-white p-4  mx-4 rounded-xl" @click.stop>
         <div class="flex items-center justify-between"> 
             <div class="font-medium text-lg text-black">
