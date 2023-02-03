@@ -49,7 +49,7 @@ onMounted(() => {
                           <TableHeaders/>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light overflow-y-auto h-full">
-                          <TableRow/>
+                          <TableRow v-for="mission in todoStore.missions" :key="mission.id + 'projct'" :mission="mission"/>
                         </tbody>
                     </table>
                     <ToDoModal :projects="projectStore.projects" :members="memberStore.members" :missions="todoStore.missions" v-if="isModalShow" @close-modal="isModalShow = false"/>

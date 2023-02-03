@@ -1,8 +1,13 @@
 <script setup>
 import { ref } from 'vue';
+import { useMemberStore } from '../store/member';
+
+const  memberStore = useMemberStore()
 
 
-const name = ref('')
+const member = ref('');
+const title = ref('');
+const description = ref('');
 
 const isEnterLoading = ref(false);
 
@@ -11,8 +16,28 @@ const emit = defineEmits([
 ]);
 
 
+function getMember(memberId) {
+  return memberStore.getMember(projectId);
+}
+
 function handleAdd() {
 	isEnterLoading.value = true;
+  memberStore.addMember({
+    member: member.value,
+    title: title.value,
+    description: description.value,
+  })
+  .then(() => {
+      setTimeout(() => {
+        emit('close-modal');
+        alert('Created')
+      }, 500)
+
+		})
+		.catch((err) => {
+			alert(err.message);
+		});
+
 
 }
 </script>
@@ -29,43 +54,65 @@ function handleAdd() {
               <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><path d="m6 6 20 20" /><path d="m26 6-20 20" /></svg>
             </div>        
         </div>
-        <div class="flex items-center justify-center gap-10 mt-3">
-            <div class="w-full">
+        <div class=" mt-3">
+          <div>
+            <div class="py-3">
+              <label for="member">fv</label>
+              <input
+              required
+              v-model="member"
+              type="text"
+              placeholder="Member..."
+              class="px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+            >             
+            </div>
+
             <input
               required
-              v-model="name"
+              v-model="title"
               type="text"
-              placeholder="Members..."
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-            >
+              placeholder="title.."
+              class="px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+            >  
+            <div class="py-3">
+              <input
+              required
+              v-model="description"
+              type="text"
+              placeholder="description.."
+              class="px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+            >             
+            </div>              
           </div>
+<div class="flex items-center justify-end pt-3">
+          <button type="submit" class="cursor-pointer  ">
+            <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-3 py-2 text-white ">
+              <template v-if="isEnterLoading">
+                <div role="status" class="flex items-center justify-center text-white text-md space-x-2">
+                  <svg class="h-6 w-6 animate-spin stroke-white" viewBox="0 0 256 256">
+                    <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="224" y1="128" x2="192" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="128" y1="224" x2="128" y2="192" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="32" y1="128" x2="64" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                  </svg>
+                  <span class=" text-white">Save</span>
+                </div>
+              </template>
 
-      <button type="submit" class="cursor-pointer ">
-        <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-3 py-2 text-white ">
-          <template v-if="isEnterLoading">
-            <div role="status" class="flex items-center justify-center text-white text-md space-x-2">
-              <svg class="h-6 w-6 animate-spin stroke-white" viewBox="0 0 256 256">
-                <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="224" y1="128" x2="192" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="128" y1="224" x2="128" y2="192" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="32" y1="128" x2="64" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-              </svg>
-              <span class=" text-white">Save</span>
+              <template v-else>
+                <div role="status" class="flex items-center justify-center text-white text-md space-x-2">
+                  <span class=" text-white h-6 flex items-center">Save</span>
+                </div>
+              </template>
             </div>
-          </template>
 
-          <template v-else>
-            <div role="status" class="flex items-center justify-center text-white text-md space-x-2">
-              <span class=" text-white h-6 flex items-center">Save</span>
-            </div>
-          </template>
-        </div>
+          </button>  
+</div>
 
-      </button>
 
         </div>
     </form>

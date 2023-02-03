@@ -2,7 +2,6 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import API from '../utils/API';
 
-
 export const useProjectStore = defineStore('project', () => {
   
   const projects = ref([]);
@@ -18,7 +17,8 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   function getProject(projectId) {
-    return projects.value.find(({ id }) => id === Number(projectId));
+    const project = projects.value.find(({ id }) => id === Number(projectId));
+    return project ? project : null;
   }
 
   function addProject(project) {

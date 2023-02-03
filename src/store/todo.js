@@ -33,7 +33,40 @@ export const useTodoStore = defineStore('mission', () => {
     });
   }
 
+  function deleteTodo(id) {
+    return new Promise(async(resolve, reject) => {
+      try {
+        const response = await API.delete(`missions/${id}` );
+        const index = missions.value.findIndex((mission) => mission.id === id);
+        if(index !== -1) {
+          missions.value.splice(index, 1);
+          resolve();
+        } else {
+          reject('error')
+        }
+      }	catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+function updateTodo(mission) {
+    return new Promise(async(resolve, reject) => {
+      try {
+        const response = await  API.put(`/missions/${mission.id}`, mission)
+            const index = missions.value.findIndex((msn) => msn.id === mission.id);
+            if (index !== -1) {
+              missions.value.splice(index, 1, mission);
+              resolve();
+            }
+            resolve();
+      }	catch (err) {
+        reject(err);
+      }
+    });
+  }
+
 	return {
-    missions, fetchTodo, addTodo
+    missions, fetchTodo, addTodo, updateTodo, deleteTodo
 	};
 });

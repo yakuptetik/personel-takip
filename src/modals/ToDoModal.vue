@@ -9,7 +9,7 @@ const todoStore = useTodoStore()
 const isEnterLoading = ref(false);
 const projectStore = useProjectStore();
 
-const memberId = ref('');
+const member = ref('');
 const projectId = ref(-1);
 const title = ref('');
 const actualDate = ref('');
@@ -33,11 +33,15 @@ onMounted(async () => {
   projectStore.fetchProject();
 });
 
+function onMemberChange(member) {
+  title.value = member.title.name;
+}
+
 function handleAdd() {
   isEnterLoading.value = true;
 
   const payload = {
-    member_id: memberId.value,
+    member_id: member.value.id,
     project_id: projectId.value,
     title: title.value,
     actualDate: actualDate.value,
@@ -102,9 +106,9 @@ function handleAdd() {
                 class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-900">
                 Member
               </label>
-            <select v-model="memberId"
+            <select v-model="member" @change="onMemberChange(member)"
               class="cursor-pointer bg-white border uppercase border-gray-300 text-gray-900 text-sm pl-2  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full outline-none border-none">
-              <option v-for="member in members" :value="member.id">{{ member.name }}</option>
+              <option v-for="member in members" :value="member">{{ member.name }}</option>
             </select>
             </div>
           </div>

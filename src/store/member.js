@@ -20,7 +20,8 @@ export const useMemberStore = defineStore('member', () => {
   }
 
   function getMember(memberId) {
-    return members.value.find((member) => member.id === Number(memberId))
+    const member = members.value.find(({ id }) => id === Number(memberId));
+    return member ? member : null;
   }
 
   function addMember(member) {
