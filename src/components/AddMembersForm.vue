@@ -1,35 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { useMemberStore } from '../store/member';
+import { ref, onMounted } from 'vue';
+
 import AddMembersModal from '../modals/AddMembersModal.vue';
 import UpdateMember from '../modals/UpdateMember.vue';
 
 const isAddMember = ref(false);
 const isUpdateMember = ref(false);
+let memberStore = useMemberStore();
 
-const members = ref([
-
-{ id:0, name:'mehmet yılmaz'},
-{ id:1, name:'arda turan'},
-{ id:2, name:'ahmet kural'},
-{ id:3, name:'ismail yıldız'},
-{ id:4, name:'tuğba genç'},
-{ id:5, name:'mehmet yılmaz'},
-{ id:6, name:'arda turan'},
-{ id:7, name:'ahmet kural'},
-{ id:8, name:'ismail yıldız'},
-{ id:9, name:'tuğba genç'},
-{ id:10, name:'mehmet yılmaz'},
-{ id:11, name:'arda turan'},
-{ id:12, name:'ahmet kural'},
-{ id:13, name:'ismail yıldız'},
-{ id:14, name:'tuğba genç'},
-{ id:15, name:'mehmet yılmaz'},
-{ id:16, name:'arda turan'},
-{ id:17, name:'ahmet kural'},
-{ id:18, name:'ismail yıldız'},
-{ id:19, name:'tuğba genç'},
-
-])
+onMounted(async() => {
+    memberStore.fetchMember();
+});
 
 </script>
 
@@ -45,7 +27,7 @@ const members = ref([
               members
           </div>
           <div class=" w-full h-[83%] bg-white  border overflow-y-auto">
-            <div class=" overflow-y-auto" v-for="member in members">
+            <div class=" overflow-y-auto" v-for="member in memberStore?.members">
               <div class="p-3 text-lg uppercase w-full hover:bg-gray-100 border-b flex items-center justify-between group text-gray-600">
                 <div>
                   {{ member.name }}

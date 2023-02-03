@@ -1,6 +1,8 @@
+import { useUserStore } from '../store/user';
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from './routes';
 import API from '../utils/API'
+
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -8,10 +10,12 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	const token = localStorage.getItem('token');
+const userStore = useUserStore();
+const token = localStorage.getItem('token');
 
 	if(token) {
-		API.defaults.headers.common['Authorization'] = `Bearer ${token}`
+		API.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+		userStore.isAuth = true;
 	}
 
 	next();

@@ -1,22 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import AddTitlesModal from '../modals/AddTitlesModal.vue';
 import UpdateTitleModal from '../modals/UpdateTitleModal.vue';
+import { useTitleStore } from '../store/title';
+
+const titleStore = useTitleStore();
+
 
 const isAddTitle = ref(false);
 const isUpdateTitle = ref(false);
 
-const titles = ref([
-
-{ id:0, name:'Front-End Developer'},
-{ id:1, name:'Back-End Developer'},
-{ id:2, name:'Mobile Developer'},
-{ id:3, name:'Graphic Designer'},
-{ id:4, name:'UI/UX Designer'},
-{ id:5, name:'Social Media'},
-{ id:6, name:'Project Menager'},
-
-])
+onMounted(() => {
+  titleStore.fetchTitle();
+});
 
 </script>
 
@@ -32,7 +28,7 @@ const titles = ref([
             titles
           </div>
           <div class=" w-full bg-white  border overflow-y-auto">
-            <div class=" overflow-y-auto" v-for="title in titles">
+            <div class=" overflow-y-auto" v-for="title in titleStore.titles">
               <div class="p-3 text-lg group uppercase w-full hover:bg-gray-100 border-b flex items-center justify-between text-gray-600">
                 <div>
                   {{ title.name }}

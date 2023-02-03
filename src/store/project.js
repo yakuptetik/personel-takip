@@ -11,8 +11,6 @@ export const useProjectStore = defineStore('project', () => {
     API.get('/projects')
       .then((response) => {
         projects.value = response.data.projects;
-        console.log('gwfedi')
-        localStorage.setItem('projects', JSON.stringify(projects.value));
       })
       .catch(() => {
 
@@ -20,7 +18,7 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   function getProject(projectId) {
-    return projects.value.find((project) => project.id === Number(projectId))
+    return projects.value.find(({ id }) => id === Number(projectId));
   }
 
   function addProject(project) {
@@ -29,7 +27,6 @@ export const useProjectStore = defineStore('project', () => {
         API.post('/projects', project)
           .then((response) => {
             projects.value.push(response.data.project);
-            localStorage.setItem('projects', JSON.stringify(projects.value));
             resolve();
           });
       }	catch (err) {
@@ -39,17 +36,16 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   function deleteProject(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
       try {
-        API.delete(`projects/${id}` )
-          .then((response) => {
-            const index = projects.value.findIndex((project) => project.id === id);
-            if(index !== -1) {
-              projects.value.splice(index, 1);
-            }
-            localStorage.setItem('projects', JSON.stringify(projects.value));
-            resolve();
-          });
+        const response = await API.delete(`projects/${id}` );
+        const index = projects.value.findIndex((project) => project.id === id);
+        if(index !== -1) {
+          projects.value.splice(index, 1);
+          resolve();
+        } else {
+          reject('error')
+        }
       }	catch (err) {
         reject(err);
       }
@@ -65,7 +61,6 @@ export const useProjectStore = defineStore('project', () => {
             if (index !== -1) {
               projects.value.splice(index, 1, project);
             }
-            localStorage.setItem('projects', JSON.stringify(projects.value));
             resolve();
           });
       }	catch (err) {
@@ -76,6 +71,6 @@ export const useProjectStore = defineStore('project', () => {
   
 
 	return {
-    projects,addProject,fetchProject,deleteProject,getProject,updateProject
+    projects, addProject, fetchProject, deleteProject, updateProject, getProject 
 	};
 });

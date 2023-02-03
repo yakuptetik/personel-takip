@@ -1,10 +1,34 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useProjectStore } from '../store/project';
+import { useTodoStore } from '../store/todo'
+import { useMemberStore } from '../store/member';
+import { useUserStore } from '../store/user';
+import { useTitleStore } from '../store/title';
+import { useStatusStore } from '../store/status';
 import TableHeaders from '../components/table/TableHeaders.vue';
 import TableRow from '../components/table/TableRow.vue';
 import ToDoModal from '../modals/ToDoModal.vue';
 
 const isModalShow = ref(false);
+
+
+const userStore = useUserStore();
+const todoStore = useTodoStore();
+const memberStore = useMemberStore();
+const projectStore = useProjectStore();
+const titleStore = useTitleStore();
+const statusStore = useStatusStore();
+
+onMounted(() => {
+  if(userStore.isAuth) {
+    todoStore.fetchTodo();
+    titleStore.fetchTitle();
+    memberStore.fetchMember();
+    projectStore.fetchProject();
+    statusStore.fetchStatus();
+  }
+});
 
 </script>
 
@@ -28,7 +52,7 @@ const isModalShow = ref(false);
                           <TableRow/>
                         </tbody>
                     </table>
-                    <ToDoModal v-if="isModalShow" @close-modal="isModalShow = false"/>
+                    <ToDoModal :projects="projectStore.projects" :members="memberStore.members" :missions="todoStore.missions" v-if="isModalShow" @close-modal="isModalShow = false"/>
                 </div>
             </div>
         </div>
