@@ -12,20 +12,18 @@ export const useTitleStore = defineStore('title', () => {
       .then((response) => {
         titles.value = response.data.titles;
         console.log('titles')
-        localStorage.setItem('titles', JSON.stringify(titles.value));
       })
       .catch(() => {
 
       });
   }
 
-  function addMember(member) {
+  function addTitle(title) {
     return new Promise((resolve, reject) => {
       try {
-        API.post('/titles', member)
+        API.post('/titles', title)
           .then((response) => {
-            titles.value.push(response.data.member);
-            localStorage.setItem('titles', JSON.stringify(titles.value));
+            titles.value.push(response.data.titles);
             resolve();
           });
       }	catch (err) {
@@ -34,7 +32,25 @@ export const useTitleStore = defineStore('title', () => {
     });
   }
 
+  function deleteTitle(id) {
+    return new Promise(async(resolve, reject) => {
+      try {
+        const response = await API.delete(`titles/${id}` );
+        const index = titles.value.findIndex((title) => title.id === id);
+        if(index !== -1) {
+          titles.value.splice(index, 1);
+          resolve();
+        } else {
+          reject('error')
+        }
+      }	catch (err) {
+        reject(err);
+      }
+    });
+  }
+  
+
 	return {
-    titles,addMember,fetchTitle
+    titles, addTitle, deleteTitle, fetchTitle
 	};
 });

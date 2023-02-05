@@ -39,8 +39,8 @@ const email = ref('')
                         name="email" 
                         id="email"
                         class="disabled:bg-slate-50 disabled:text-white disabled:border-slate-200 disabled:shadow-none
-                              invalid:border-blue-500 invalid:text-blue-600  focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                              focus:invalid:border-blue-500 focus:invalid:ring-blue-500  border border-gray-300 text-white sm:text-sm
+                              invalid:border-blue-500 invalid:text-gray-900  focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+                              focus:invalid:border-blue-500 focus:invalid:ring-blue-500  border border-gray-300 text-gray-900 sm:text-sm
                               rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                   </div>
 
@@ -57,7 +57,7 @@ const email = ref('')
                         id="password"
                         class="disabled:bg-slate-50 disabled:text-white disabled:border-slate-200 disabled:shadow-none
                               invalid:border-blue-500 invalid:text-blue-600  focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                              focus:invalid:border-blue-500 focus:invalid:ring-blue-500 border border-gray-300 text-white sm:text-sm
+                              focus:invalid:border-blue-500 focus:invalid:ring-blue-500 border border-gray-300 text-gray-900 sm:text-sm
                               rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                   </div>
 

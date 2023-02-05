@@ -39,8 +39,10 @@ export const useTodoStore = defineStore('mission', () => {
         const response = await API.delete(`missions/${id}` );
         const index = missions.value.findIndex((mission) => mission.id === id);
         if(index !== -1) {
-          missions.value.splice(index, 1);
-          resolve();
+          setTimeout(() => {
+            missions.value.splice(index, 1);
+            resolve();
+          }, 1500);
         } else {
           reject('error')
         }

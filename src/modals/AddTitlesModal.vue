@@ -1,8 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { useTitleStore } from '../store/title';
+
+const titleStore = useTitleStore();
 
 
-const name = ref('')
+const title = ref('');
+const description = ref('');
 
 const isEnterLoading = ref(false);
 
@@ -13,6 +17,19 @@ const emit = defineEmits([
 
 function handleAdd() {
 	isEnterLoading.value = true;
+  titleStore.addTitle({
+    name: title.value,
+    description: description.value
+  })
+  .then(() => {
+    emit('close-modal');
+    alert('create...')
+		})
+		.catch((err) => {
+			alert(err.message);
+		});
+
+
 }
 </script>
 
@@ -30,14 +47,23 @@ function handleAdd() {
         </div>
         <div class="flex items-center justify-center gap-10 mt-3">
             <div class="w-full">
-            <input
-              required
-              v-model="name"
-              type="text"
-              placeholder="Title..."
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-            >
-          </div>
+              <input
+                required
+                v-model="title"
+                type="text"
+                placeholder="Title..."
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+              >
+            </div>
+            <div class="w-full">
+              <input
+                required
+                v-model="description"
+                type="text"
+                placeholder="Title..."
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+              >
+            </div>
 
       <button type="submit" class="cursor-pointer ">
         <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-3 py-2 text-white ">

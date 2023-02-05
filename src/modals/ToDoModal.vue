@@ -12,7 +12,6 @@ const projectStore = useProjectStore();
 const member = ref('');
 const projectId = ref(-1);
 const title = ref('');
-const actualDate = ref('');
 const target_date = ref('');
 const description = ref('');
 
@@ -44,7 +43,6 @@ function handleAdd() {
     member_id: member.value.id,
     project_id: projectId.value,
     title: title.value,
-    actualDate: actualDate.value,
     target_date: moment(target_date.value).format('YYYY-MM-DD HH:mm:ss'),
     description: description.value
   };
@@ -92,9 +90,9 @@ function handleAdd() {
                 class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-900">
                 Projects
               </label>
-            <select v-model="projectId"
+            <select required v-model="projectId"
               class="bg-white border cursor-pointer pl-2 uppercase border-gray-300 text-gray-900 text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full outline-none border-none">
-              <option v-for="project in projects" selected :value="project.id">{{ project.name }}</option>
+              <option  v-for="project in projects" selected :value="project.id">{{ project.name }}</option>
             </select>
             </div>
           </div>
@@ -106,7 +104,7 @@ function handleAdd() {
                 class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-900">
                 Member
               </label>
-            <select v-model="member" @change="onMemberChange(member)"
+            <select required v-model="member" @change="onMemberChange(member)"
               class="cursor-pointer bg-white border uppercase border-gray-300 text-gray-900 text-sm pl-2  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full outline-none border-none">
               <option v-for="member in members" :value="member">{{ member.name }}</option>
             </select>
@@ -122,7 +120,7 @@ function handleAdd() {
               <label for="name"
                 class="absolute cursor-pointer -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-900">
                 Target date </label>
-              <input v-model="target_date" type="date" name="name" id="name"
+              <input required v-model="target_date" type="date" name="name" id="name"
                 class="cursor-pointer border-none outline-none bg-white block w-full border-0  text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" />
             </div>
           </div>

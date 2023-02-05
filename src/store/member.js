@@ -12,7 +12,6 @@ export const useMemberStore = defineStore('member', () => {
       .then((response) => {
         members.value = response.data.members;
         console.log('members')
-        localStorage.setItem('members', JSON.stringify(members.value));
       })
       .catch(() => {
 
@@ -30,9 +29,27 @@ export const useMemberStore = defineStore('member', () => {
         API.post('/members', member)
           .then((response) => {
             members.value.push(response.data.member);
-            localStorage.setItem('members', JSON.stringify(members.value));
+  
             resolve();
           });
+      }	catch (err) {
+        reject(err);
+      }
+    });
+  }
+    function deleteMember(id) {
+    return new Promise(async(resolve, reject) => {
+      try {
+        const response = await API.delete(`members/${id}` );
+        const index = members.value.findIndex((member) => member.id === id);
+        if(index !== -1) {
+          setTimeout(() => {
+            members.value.splice(index, 1);
+            resolve();
+          }, 1500);
+        } else {
+          reject('error')
+        }
       }	catch (err) {
         reject(err);
       }
@@ -43,6 +60,7 @@ export const useMemberStore = defineStore('member', () => {
     members,
     addMember,
     fetchMember,
-    getMember
+    getMember,
+    deleteMember
 	}
 });

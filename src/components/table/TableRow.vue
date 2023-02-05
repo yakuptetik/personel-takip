@@ -3,13 +3,14 @@ import { ref,onMounted} from 'vue'
 import { useTodoStore } from '../../store/todo';
 import { useProjectStore } from '../../store/project';
 import { useStatusStore } from '../../store/status';
-import { useMemberStore } from '../../store/member';
 import UpdateTable from './UpdateTable.vue';
 
 
 const projectStore = useProjectStore()
 const todoStore = useTodoStore();
 const statusStore = useStatusStore()
+
+const isDeleteLoading = ref(false);
 
 defineProps({
   mission: {
@@ -29,22 +30,24 @@ function getStatus(statusId) {
   return statusStore.getStatus(statusId);
 }
 
+
 onMounted(() => {
   todoStore.fetchTodo();
   projectStore.fetchProject();
 });
 
 function handleDelete(missionId) {
-    setTimeout(() => {
-      todoStore.deleteTodo( missionId)
+  isDeleteLoading.value = true;
+  todoStore.deleteTodo( missionId)
         .then(() => {
-          alert('Deleted Successfully...')
-          
+          setTimeout(() => {
+            alert('Deleted Successfully...')
+          }, 100);
         })
         .catch((err) => {
           alert(err.message);
         });
-		}, 1000);
+
 }
 
 </script>
@@ -81,12 +84,12 @@ function handleDelete(missionId) {
             </div>
         </td>
         <td class="py-3 px-6 text-center">            
+            <div v-if="mission.delivery_date !== null" class="flex items-center">
+              {{ mission.delivery_date }}
+            </div>
             <div v-if="mission.delivery_date === null" class="flex items-center pl-3">
               -
             </div> 
-            <div v-else class="flex items-center">
-              {{ mission?.delivery_date }}
-            </div>
         </td>
         <td class="py-3 px-6 text-left">
             <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
@@ -97,9 +100,30 @@ function handleDelete(missionId) {
           <button @click="isUpdate = true" class="bg-green-300">
             up
           </button>
-          <button @click="handleDelete(mission.id)" class="bg-red-300">
-            del
-          </button>
+
+        <div @click="handleDelete(mission.id)" class="w-4 mr-2 transform hover:text-red-700 hover:scale-110">
+          <template v-if="isDeleteLoading">
+            <div aria-label="Loading..." role="status" class="flex animate-spin items-center justify-center text-red-700 text-base space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+          </template>
+
+          <template v-else>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </template>
+        </div>
         </td>
     </tr>
 </template>

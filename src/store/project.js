@@ -41,8 +41,10 @@ export const useProjectStore = defineStore('project', () => {
         const response = await API.delete(`projects/${id}` );
         const index = projects.value.findIndex((project) => project.id === id);
         if(index !== -1) {
-          projects.value.splice(index, 1);
-          resolve();
+          setTimeout(() => {
+            projects.value.splice(index, 1);
+            resolve();
+          }, 1500);
         } else {
           reject('error')
         }

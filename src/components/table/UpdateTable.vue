@@ -36,7 +36,6 @@ onMounted(() => {
   title.value = props.mission.member?.title.name;
   status.value = props.mission.status;
   description.value = props.mission.description;
-  delivery_date.value = props.mission.delivery_date
 });
 
 function addTodo(){
