@@ -11,7 +11,6 @@ export const useMemberStore = defineStore('member', () => {
     API.get('/members')
       .then((response) => {
         members.value = response.data.members;
-        console.log('members')
       })
       .catch(() => {
 
@@ -28,15 +27,17 @@ export const useMemberStore = defineStore('member', () => {
       try {
         API.post('/members', member)
           .then((response) => {
-            members.value.push(response.data.member);
-  
-            resolve();
+            setTimeout(() => {
+              members.value.push(response.data.member);
+              resolve();
+            }, 1000);
           });
       }	catch (err) {
         reject(err);
       }
     });
   }
+
     function deleteMember(id) {
     return new Promise(async(resolve, reject) => {
       try {
@@ -56,11 +57,34 @@ export const useMemberStore = defineStore('member', () => {
     });
   }
 
+
+  function updateMember(member) {
+    return new Promise(async(resolve, reject) => {
+      try {
+        const response = await  API.put(`members/${member.id}`, member)
+            const index = members.value.findIndex((mmbr) => mmbr.id === member.id);
+            if (index !== -1) {
+              setTimeout(() => {
+                members.value.splice(index, 1, member);
+                resolve();
+              }, 1000);
+            }
+            else {
+              reject('error')
+            }
+      }	catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+
 	return {
     members,
     addMember,
     fetchMember,
     getMember,
-    deleteMember
+    deleteMember,
+    updateMember
 	}
 });

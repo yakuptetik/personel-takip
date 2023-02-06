@@ -18,8 +18,8 @@ const email = ref('')
 </script>
 
 <template>
-<section class="">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+<section class=" flex  flex-col items-center justify-center h-[100%]">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-full lg:py-0">
       <div class="w-full bg-gray-50 rounded-lg shadow shadow-black border-gray-800 md:mt-0 sm:max-w-md xl:p-0">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <div class="text-xl font-bold leading-tight tracking-tight text-gray-800 md:text-2xl flex items-center justify-center">
@@ -33,7 +33,7 @@ const email = ref('')
                     </label>
                     <input 
                         required
-                        v-model="email" 
+                        v-model="email"
                         placeholder="Your mail address" 
                         type="email" 
                         name="email" 

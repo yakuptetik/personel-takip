@@ -11,7 +11,7 @@ import TableRow from '../components/table/TableRow.vue';
 import ToDoModal from '../modals/ToDoModal.vue';
 
 const isModalShow = ref(false);
-
+const search = ref('');
 
 const userStore = useUserStore();
 const todoStore = useTodoStore();
@@ -38,10 +38,23 @@ onMounted(() => {
 <div class="overflow-x-auto">
         <div class="flex justify-center bg-gray-100 font-sans overflow-hidden">
             <div class="w-full px-10">
-              <div class="flex items-center justify-end pt-3">
-                  <button @click="isModalShow = true" class="bg-blue-500 border hover:bg-blue-400 text-white px-3 py-2 rounded-lg uppercase text-sm">
-                    Add titles
-                  </button>          
+              <div class="flex items-center justify-between pt-3">
+
+        <div class="flex items-center">
+          <input
+            v-model="search"
+            class="flex border h-10 pl-5 shadow-md  items-center justify-center rounded-full outline-none focus:outline focus:outline-indigo-400"
+            type="text"
+            autocomplete="off"
+            name="search"
+            placeholder="Search..."
+          />
+        </div>
+        <div> 
+          <button @click="isModalShow = true" class="bg-blue-500 border hover:bg-blue-400 text-white px-3 py-2 rounded-lg uppercase text-sm">
+              Add To-Do
+          </button>      
+        </div>
               </div>
                 <div class="bg-white rounded-2xl w-full  my-4">
                     <table class="w-full table-auto rounded-2xl">
@@ -49,7 +62,7 @@ onMounted(() => {
                           <TableHeaders/>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light overflow-y-auto h-full">
-                          <TableRow v-for="mission in todoStore.missions" :key="mission.id + 'projct'" :mission="mission"/>
+                          <TableRow v-for="mission in todoStore.filteredTodos(search)" :key="mission.id + 'project'" :mission="mission"/>
                         </tbody>
                     </table>
                     <ToDoModal :projects="projectStore.projects" :members="memberStore.members" :missions="todoStore.missions" v-if="isModalShow" @close-modal="isModalShow = false"/>

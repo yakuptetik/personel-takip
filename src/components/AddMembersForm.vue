@@ -19,19 +19,17 @@ onMounted(async() => {
 <template>
       <div class="bg-gray-100 h-full w-full p-10 ">
           <div class="flex items-center justify-end">
-              <button @click="isAddMember = true" class="bg-blue-500 hover:bg-blue-400 text-white border px-3 py-2 rounded-lg uppercase text-sm">
-                Add members
+              <button @click="isAddMember = true" class="bg-blue-500 hover:bg-blue-400 text-white border px-3 py-2 rounded-lg  text-sm">
+                Add Members
               </button>          
           </div>
         <div class="mt-4 h-full">
-          <div class="uppercase text-2xl py-2 px-3 bg-gray-200 border border-b-transparent rounded-t-xl text-gray-600">
-              members
+          <div class=" text-2xl py-2 px-3 bg-gray-200 border border-b-transparent rounded-t-xl text-gray-600">
+              Members
           </div>
-          <div class=" w-full h-[83%] bg-white  border overflow-y-auto">
-            <div class=" overflow-y-auto" v-for="member in memberStore?.members">
-
-            <MembersRow :member="member" />
-
+          <div class="w-full  h-[84%] overflow-y-auto bg-white  border">
+            <div class="" v-for="member in memberStore?.members">
+              <MembersRow :member="member" />
             </div>
           </div>          
         </div>

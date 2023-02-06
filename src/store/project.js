@@ -26,8 +26,10 @@ export const useProjectStore = defineStore('project', () => {
       try {
         API.post('/projects', project)
           .then((response) => {
-            projects.value.push(response.data.project);
-            resolve();
+            setTimeout(() => {
+              projects.value.push(response.data.project);
+              resolve();
+            }, 1000)
           });
       }	catch (err) {
         reject(err);
@@ -44,7 +46,7 @@ export const useProjectStore = defineStore('project', () => {
           setTimeout(() => {
             projects.value.splice(index, 1);
             resolve();
-          }, 1500);
+          }, 1000);
         } else {
           reject('error')
         }
@@ -55,16 +57,19 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   function updateProject(project) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
       try {
-        API.put(`projects/${project.id}`, project)
-          .then((response) => {
-            const index = projects.value.findIndex((pst) => pst.id === project.id);
+        const response = await  API.put(`projects/${project.id}`, project)
+            const index = projects.value.findIndex((prjct) => prjct.id === project.id);
             if (index !== -1) {
-              projects.value.splice(index, 1, project);
+              setTimeout(() => {
+                projects.value.splice(index, 1, project);
+                resolve();
+              }, 1000)
             }
-            resolve();
-          });
+            else {
+              reject('error')
+            }
       }	catch (err) {
         reject(err);
       }

@@ -39,7 +39,7 @@ onMounted(() => {
 });
 
 function addTodo(){
-
+ console.log(status.value);
   const newPayload = {
     id: props.mission.id,
     member_id: memberId.value,

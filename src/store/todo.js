@@ -1,17 +1,34 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { useProjectStore } from './project';
 import API from '../utils/API';
 
-
+const projectStore = useProjectStore()
 export const useTodoStore = defineStore('mission', () => {
   const missions = ref([])
 
+
+  function filteredTodos(search) {
+		if (missions.value && search) {
+			return missions.value.filter((mission) => projectStore.getProject(mission?.project)?.name.toLowerCase().includes(search.toLowerCase())
+				|| mission.member.name.toLowerCase().includes(search.toLowerCase()));
+		}
+
+		return missions.value;
+	}
+
+  function sortTodo(sortValues) {
+		if (!sortValues.desc) {
+			missions.value.sort((a, b) => (a[sortValues.type] > b[sortValues.type] ? 1 : -1));
+		} else {
+			missions.value.sort((a, b) => (a[sortValues.type] > b[sortValues.type] ? -1 : 1));
+		}
+	}
 
   function fetchTodo() {
     API.get('/missions')
       .then((response) => {
         missions.value = response.data.missions;
-        console.log('missions')
       })
       .catch(() => {
 
@@ -42,7 +59,7 @@ export const useTodoStore = defineStore('mission', () => {
           setTimeout(() => {
             missions.value.splice(index, 1);
             resolve();
-          }, 1500);
+          }, 1000);
         } else {
           reject('error')
         }
@@ -69,6 +86,12 @@ function updateTodo(mission) {
   }
 
 	return {
-    missions, fetchTodo, addTodo, updateTodo, deleteTodo
+    missions, 
+    fetchTodo, 
+    addTodo, 
+    updateTodo, 
+    deleteTodo,
+    filteredTodos,
+    sortTodo
 	};
 });

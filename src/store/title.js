@@ -23,8 +23,10 @@ export const useTitleStore = defineStore('title', () => {
       try {
         API.post('/titles', title)
           .then((response) => {
-            titles.value.push(response.data.titles);
-            resolve();
+            setTimeout(() => {
+              titles.value.push(response.data.titles);
+              resolve();
+            }, 1000);
           });
       }	catch (err) {
         reject(err);
@@ -38,8 +40,10 @@ export const useTitleStore = defineStore('title', () => {
         const response = await API.delete(`titles/${id}` );
         const index = titles.value.findIndex((title) => title.id === id);
         if(index !== -1) {
-          titles.value.splice(index, 1);
-          resolve();
+          setTimeout(() => {
+            titles.value.splice(index, 1);
+            resolve();
+          }, 1000);
         } else {
           reject('error')
         }
@@ -48,9 +52,30 @@ export const useTitleStore = defineStore('title', () => {
       }
     });
   }
+
+  function updateTitle(title) {
+    return new Promise(async(resolve, reject) => {
+      try {
+        const response = await  API.put(`titles/${title.id}`, title)
+            const index = titles.value.findIndex((ttl) => ttl.id === title.id);
+            if (index !== -1) {
+              setTimeout(() => {
+                titles.value.splice(index, 1, title);
+                resolve();
+              }, 1000);
+            }
+            else {
+              reject('error')
+            }
+      }	catch (err) {
+        reject(err);
+      }
+    });
+  }
+  
   
 
 	return {
-    titles, addTitle, deleteTitle, fetchTitle
+    titles, addTitle, deleteTitle, fetchTitle, updateTitle
 	};
 });
