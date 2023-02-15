@@ -11,7 +11,8 @@ export const useUserStore = defineStore('user', () => {
   function loginUser(a) {
     API.post('/login', a)
       .then((response) => {
-        API.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        console.log('girdi', response)
+        API.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
         localStorage.setItem('token', response.data.token);
         isAuth.value = true;
       })
