@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useTitleStore } from '../store/title';
 
 const titleStore = useTitleStore();
+const isDisabled = ref(false)
 
 
 const title = ref('');
@@ -17,6 +18,7 @@ const emit = defineEmits([
 
 function handleAdd() {
 	isEnterLoading.value = true;
+  isDisabled.value = true;
   titleStore.addTitle({
     name: title.value,
     description: description.value
@@ -57,7 +59,7 @@ function handleAdd() {
                 </label>
                 <input
                     required
-                    v-model="name"
+                    v-model="title"
                     type="text"
                     class="border-none rounded-md outline-none px-3 py-1.5 w-full"
                   > 
@@ -82,7 +84,7 @@ function handleAdd() {
 
         </div>
         <div class="flex items-center justify-end"> 
-        <button type="submit" class="cursor-pointer ">
+        <button :disabled='isDisabled' type="submit" class="cursor-pointer ">
         <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-4 py-2 text-white ">
           <template v-if="isEnterLoading">
             <div role="status" class="flex items-center justify-center text-white text-md space-x-2">

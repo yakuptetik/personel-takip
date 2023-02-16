@@ -27,8 +27,8 @@ onMounted(() => {
             <div class="uppercase text-2xl py-2 px-3 bg-gray-200 border border-b-transparent rounded-t-xl text-gray-600">
               projects
             </div>
-            <div class=" w-full bg-white  border overflow-y-auto">
-              <div class=" overflow-y-auto" v-for="project in projectStore.projects">
+            <div class="w-full h-[84%] overflow-y-auto bg-gray-100 ">
+              <div class="bg-white border-x" v-for="project in projectStore.projects">
                   <ProjectRow :project="project"/>
               </div>
             </div>          

@@ -27,8 +27,12 @@ const props = defineProps({
   mission: {
     type: Object,
     required: true
-  }
+  },
 });
+
+const emit = defineEmits([
+	'close-modal',
+]); 
 
 onMounted(() => {
   memberId.value = props.mission.member.id;
@@ -36,34 +40,35 @@ onMounted(() => {
   title.value = props.mission.member?.title.name;
   status.value = props.mission.status;
   description.value = props.mission.description;
+  target_date.value = moment(props.mission.target_date).format('YYYY-MM-DD');
+  delivery_date.value = props.mission.delivery_date ? moment(props.mission.delivery_date).format('YYYY-MM-DD'): null;
 });
 
 function addTodo(){
- console.log(status.value);
+console.log(status.value);
   const newPayload = {
     id: props.mission.id,
     member_id: memberId.value,
     project_id: projectId.value,
     title: title.value,
-    delivery_date: moment(delivery_date.value).format('YYYY-MM-DD HH:mm:ss'),
     target_date: moment(target_date.value).format('YYYY-MM-DD HH:mm:ss'),
     description: description.value,
-    status: status.value
+    status_id: status.value
 
   };
   todoStore.updateTodo(newPayload)
   .then(() => {
     alert('helal len...')
+    emit('close-modal');
     })
   .catch((err) => {
     alert(err.message);
   });
-
 }
 </script>
 
 <template>
-      <tr  class="border-b border-gray-200 bg-gray-50 ">
+      <tr class="border-b border-gray-200 bg-gray-50 ">
         <td class=" px-6 text-left ">
           <div class="py-3 text-left ">
             <div

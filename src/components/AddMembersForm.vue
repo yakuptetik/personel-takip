@@ -27,8 +27,8 @@ onMounted(async() => {
           <div class=" text-2xl py-2 px-3 bg-gray-200 border border-b-transparent rounded-t-xl text-gray-600">
               Members
           </div>
-          <div class="w-full  h-[84%] overflow-y-auto bg-white  border">
-            <div class="" v-for="member in memberStore?.members">
+          <div class="w-full  h-[84%] overflow-y-auto bg-gray-100 ">
+            <div class="bg-white border-x" v-for="member in memberStore?.members">
               <MembersRow :member="member" />
             </div>
           </div>          

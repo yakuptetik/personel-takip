@@ -8,7 +8,7 @@ import AddMembersForm from '../components/AddMembersForm.vue';
 
 
 <template>
-  <div class="flex h-full justify-between  w-full bg-gray-50 ">
+  <div class="lg:flex h-full lg:justify-between w-full bg-gray-50 ">
       <AddProjectForm />
       <AddTitlesForm/>
       <AddMembersForm/>

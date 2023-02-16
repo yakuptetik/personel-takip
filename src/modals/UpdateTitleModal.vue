@@ -99,7 +99,7 @@ function handleAdd() {
               </div>  
           </div>
     
-          <div>
+          <div class="flex items-center justify-end">
             <button :disabled='isDisabled' type="submit" class="cursor-pointer ">
             <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-3 py-2 text-white ">
               <template v-if="isEnterLoading">

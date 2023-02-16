@@ -6,6 +6,7 @@ import { useTitleStore } from '../store/title';
 const titleStore = useTitleStore();
 
 const  memberStore = useMemberStore()
+const isDisabled = ref(false)
 
 
 const name = ref('');
@@ -20,8 +21,9 @@ const emit = defineEmits([
 
 function handleAdd() {
 	isEnterLoading.value = true;
+  isDisabled.value = true;
   memberStore.addMember({
-    name: name.value.id,
+    name: name.value,
     title_id: title.value.id,
   })
   .then(() => {
@@ -42,7 +44,7 @@ function handleAdd() {
 
 <div class="flex justify-end bg-[#000000c7] fixed items-center pt-5 top-0 bottom-0 right-0 left-0 z-30 " @click="$emit('close-modal')" @keypress="'close-modal'">
     
-  <form @submit.prevent="handleAdd()" class="bg-white p-4  mx-4  w-[30%] rounded-xl" @click.stop>
+  <form @submit.prevent="handleAdd()" class="bg-white p-4  mx-4 rounded-xl" @click.stop>
         <div class="flex items-center justify-between"> 
             <div class="font-medium text-lg text-black">
                 Add Members
@@ -84,7 +86,7 @@ function handleAdd() {
 
           </div>
           <div class="flex items-center justify-end">
-              <button type="submit" class="cursor-pointer  ">
+              <button :disabled='isDisabled' type="submit" class="cursor-pointer  ">
                 <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-4 py-2 text-white ">
                   <template v-if="isEnterLoading">
                     <div role="status" class="flex items-center justify-center text-white text-md space-x-2">

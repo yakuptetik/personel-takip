@@ -5,6 +5,8 @@ import {useProjectStore} from '../store/project';
 const projectStore = useProjectStore();
 
 const isEnterLoading = ref(false);
+const isDisabled = ref(false)
+
 
 const emit = defineEmits([
 	'close-modal',
@@ -15,6 +17,7 @@ const description = ref('');
 
 async function handleSubmit() {
   isEnterLoading.value = true;
+  isDisabled.value = true;
 	await projectStore.addProject({ name: name.value, description: description.value })
 		.then(() => {
       emit('close-modal');
@@ -76,7 +79,7 @@ async function handleSubmit() {
               </div>         
           </div>
           <div class="flex items-center justify-end">
-            <button type="submit" class="cursor-pointer ">
+            <button :disabled='isDisabled' type="submit" class="cursor-pointer ">
                 <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-4 py-2 text-white ">
                   <template v-if="isEnterLoading">
                     <div role="status" class="flex items-center justify-center text-white text-md space-x-2">

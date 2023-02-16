@@ -63,7 +63,7 @@ export const useProjectStore = defineStore('project', () => {
             const index = projects.value.findIndex((prjct) => prjct.id === project.id);
             if (index !== -1) {
               setTimeout(() => {
-                projects.value.splice(index, 1, project);
+                projects.value.splice(index, 1, response.data.project);
                 resolve();
               }, 1000)
             }

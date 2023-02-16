@@ -66,13 +66,22 @@ function handleAdd() {
         <div class="mt-3">
           <div class=" flex items-center justify-center">
             <div class="w-full flex items-center justify-center gap-5">
-            <input
+            <div class="py-3 text-left w-full">
+                <div
+                  class="relative rounded-md border border-gray-300  shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                  <label for="name"
+                    class="absolute -top-2 left-2 -mt-px inline-block bg-white px-1 text-xs font-medium text-gray-900">
+                    Member
+                  </label>
+                  <input
               required
               v-model="name"
               type="text"
               placeholder="Members..."
-              class="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+              class="w-full px-4 py-1  rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
             >
+                </div>
+              </div>  
             <div class="py-3 text-left w-[120%]">
               <div
                 class="relative w-full  rounded-md border border-gray-300 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
@@ -89,8 +98,8 @@ function handleAdd() {
             </div>
           </div>
 
-          <div>
-              <button type="submit" class="cursor-pointer ">
+          <div class="flex items-center justify-end">
+              <button :disabled='isDisabled' type="submit" class="cursor-pointer ">
                 <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-3 py-2 text-white ">
                   <template v-if="isEnterLoading">
                     <div role="status" class="flex items-center justify-center text-white text-md space-x-2">

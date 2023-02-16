@@ -60,7 +60,7 @@ export const useTitleStore = defineStore('title', () => {
             const index = titles.value.findIndex((ttl) => ttl.id === title.id);
             if (index !== -1) {
               setTimeout(() => {
-                titles.value.splice(index, 1, title);
+                titles.value.splice(index, 1, response.data.title);
                 resolve();
               }, 1000);
             }

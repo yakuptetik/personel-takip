@@ -75,7 +75,7 @@ function updateTodo(mission) {
         const response = await  API.put(`/missions/${mission.id}`, mission)
             const index = missions.value.findIndex((msn) => msn.id === mission.id);
             if (index !== -1) {
-              missions.value.splice(index, 1, mission);
+              missions.value.splice(index, 1, response.data.mission);
               resolve();
             }
             resolve();

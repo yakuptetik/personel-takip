@@ -21,7 +21,7 @@ function handleSort(type) {
 </script>
 
 <template>
-    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal rounded-2xl">
+    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal rounded-2xl w-full">
         <th @click="handleSort('project')" class="py-3 px-6 text-center rounded-tl-xl">
             <div class="flex items-center justify-center">
                 project
