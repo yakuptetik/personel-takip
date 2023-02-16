@@ -53,7 +53,7 @@ function handleSort(type) {
         <th class="py-3 px-6 text-left">title</th>
         <th class="py-3 px-6 text-left">actions</th>
         <th  @click="handleSort('target_date')" class="py-3 px-6 text-left">
-            <div class="flex items-center justify-center">
+            <div class="flex items-center">
             target date 
             <template v-if="sort.type === 'target_date'">
                     <template v-if="!sort.desc">

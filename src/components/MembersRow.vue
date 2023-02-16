@@ -22,12 +22,13 @@ function handleDelete(memberId) {
       memberStore.deleteMember(memberId)
         .then(() => {
           isDeleteLoading.value = false
-          setTimeout(() => {
-            alert('Deleted Successfully...')
-          }, 100);
+          // setTimeout(() => {
+          //   alert('Deleted Successfully...')
+          // }, 100);
         })
         .catch((err) => {
           alert(err.message);
+          isDeleteLoading.value = false
         });
 }
 

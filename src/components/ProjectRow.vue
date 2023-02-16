@@ -22,9 +22,9 @@ function handleDelete(projectId) {
       projectStore.deleteProject(projectId)
         .then(() => {
           isDeleteLoading.value = false
-        setTimeout(() => {
-            alert('Deleted Successfully...')
-          }, 100);
+        // setTimeout(() => {
+        //     alert('Deleted Successfully...')
+        //   }, 100);
         })
         .catch((err) => {
           alert(err.message);
@@ -34,7 +34,7 @@ function handleDelete(projectId) {
 
 
 <template>
-  <div class="p-3 text-lg uppercase w-full hover:bg-gray-50 border-b flex items-center justify-between group text-gray-600">
+  <div class="p-3 text-lg  w-full hover:bg-gray-50 border-b flex items-center justify-between group text-gray-600">
       <div>
         {{ project.name }}
       </div>

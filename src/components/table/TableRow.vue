@@ -5,6 +5,8 @@ import { useProjectStore } from '../../store/project';
 import { useStatusStore } from '../../store/status';
 import UpdateTable from './UpdateTable.vue';
 
+import moment from 'moment'
+
 
 const projectStore = useProjectStore()
 const todoStore = useTodoStore();
@@ -78,13 +80,13 @@ function handleDelete(missionId) {
             </div>
         </td>
         <td class="py-3 px-6 text-center">
-            <div class="flex items-center">
-              {{ mission.target_date }} 
+            <div class="flex items-center ">
+              {{ moment(mission.target_date).format('DD-MM-YYYY') }} 
             </div>
         </td>
         <td class="py-3 px-6 text-center">            
             <div v-if="mission.delivery_date !== null" class="flex items-center">
-              {{ mission.delivery_date }}
+              {{moment( mission.delivery_date).format('DD-MM-YYYY') }}
             </div>
             <div v-if="mission.delivery_date === null" class="flex items-center pl-3">
               -

@@ -40,9 +40,11 @@ export const useTodoStore = defineStore('mission', () => {
       try {
         API.post('/missions', mission)
           .then((response) => {
-            missions.value.push(response.data.mission);
-            localStorage.setItem('missions', JSON.stringify(missions.value));
-            resolve();
+            setTimeout(() => {
+              resolve();
+              missions.value.push(response.data.mission);
+              localStorage.setItem('missions', JSON.stringify(missions.value));
+            }, 1000)
           });
       }	catch (err) {
         reject(err);
@@ -75,8 +77,10 @@ function updateTodo(mission) {
         const response = await  API.put(`/missions/${mission.id}`, mission)
             const index = missions.value.findIndex((msn) => msn.id === mission.id);
             if (index !== -1) {
-              missions.value.splice(index, 1, response.data.mission);
-              resolve();
+              setTimeout(() => {
+                missions.value.splice(index, 1, response.data.mission);
+                resolve();
+              }, 1500);
             }
             resolve();
       }	catch (err) {

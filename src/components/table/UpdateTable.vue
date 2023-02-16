@@ -8,6 +8,7 @@ import { useTitleStore } from '../../store/title';
 import { useStatusStore } from '../../store/status';
 import moment from 'moment';
 
+
 const userStore = useUserStore();
 const todoStore = useTodoStore();
 const memberStore = useMemberStore();
@@ -29,6 +30,8 @@ const props = defineProps({
     required: true
   },
 });
+
+const isEnterLoading = ref(false);
 
 const emit = defineEmits([
 	'close-modal',
@@ -56,9 +59,9 @@ console.log(status.value);
     status_id: status.value
 
   };
+  isEnterLoading.value = true;
   todoStore.updateTodo(newPayload)
   .then(() => {
-    alert('helal len...')
     emit('close-modal');
     })
   .catch((err) => {
@@ -158,7 +161,7 @@ console.log(status.value);
               <label for="name"
                 class="absolute bg-gray-50 cursor-pointer -top-2 left-2 -mt-px inline-block  px-1 text-xs font-medium text-gray-900">
                 Actaul date </label>
-              <input v-model="delivery_date" type="date" name="name" id="name"
+              <input disabled v-model="delivery_date" type="date" name="name" id="name"
                 class="cursor-pointer bg-transparent border-none outline-none bg-white block w-full border-0  text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" />
             </div>
           </div>
@@ -179,9 +182,35 @@ console.log(status.value);
         </td>
 
         <td class="py-4 px-5 text-left flex items-center justify-center">
-          <button @click="addTodo()" class="bg-blue-500 p-2 text-white rounded ">
-            save
-          </button>
+          <div class="flex items-center justify-end">
+              <button @click="addTodo()" :disabled='isDisabled' type="submit" class="cursor-pointer ">
+                <div class="bg-blue-500 hover:bg-blue-600  rounded-lg px-2 py-1 text-white ">
+                  <template v-if="isEnterLoading">
+                    <div role="status" class="flex items-center justify-center text-white text-md">
+                      <svg class="h-4 w-4 animate-spin stroke-white" viewBox="0 0 256 256">
+                        <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="224" y1="128" x2="192" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="195.9" y1="195.9" x2="173.3" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="128" y1="224" x2="128" y2="192" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="60.1" y1="195.9" x2="82.7" y2="173.3" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="32" y1="128" x2="64" y2="128" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                        <line x1="60.1" y1="60.1" x2="82.7" y2="82.7" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                      </svg>
+                      <span class=" text-white">Save</span>
+                    </div>
+                  </template>
+
+                  <template v-else>
+                    <div role="status" class="flex items-center justify-center text-white text-md">
+                      <span class=" text-white h-5 flex items-center">Save</span>
+                    </div>
+                  </template>
+                </div>
+
+              </button>  
+          </div>
+
         </td>
 
       </tr>

@@ -20,19 +20,20 @@ function handleDelete(titleId) {
     titleStore.deleteTitle(titleId)
       .then(() => {
         isDeleteLoading.value = false
-        setTimeout(() => {
-            alert('Deleted Successfully...')
-          }, 100);
+        // setTimeout(() => {
+        //     alert('Deleted Successfully...')
+        //   }, 100);
       })
       .catch((err) => {
         alert(err.message);
+        isDeleteLoading.value = false
       });
 }
 
 </script>
 
 <template>
-<div class="p-3 text-lg group uppercase w-full hover:bg-gray-100 border-b flex items-center justify-between text-gray-600">
+<div class="p-3 text-lg group  w-full hover:bg-gray-100 border-b flex items-center justify-between text-gray-600">
   <div>
     {{ title?.name }}
   </div> 
