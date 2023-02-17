@@ -32,7 +32,6 @@ onMounted(() => {
 
 </script>
 
-
 <template>
   <div class="">
     <div class="flex justify-center bg-gray-100 font-sans overflow-hidden">
@@ -41,7 +40,7 @@ onMounted(() => {
           <div class="flex items-center">
             <input
               v-model="search"
-              class="flex border h-10 pl-5 shadow-md  items-center justify-center rounded-full outline-none focus:outline focus:outline-indigo-400"
+              class="flex border h-9 pl-5 shadow-md text-sm items-center justify-center rounded-lg outline-none focus:outline focus:outline-indigo-400"
               type="text"
               autocomplete="off"
               name="search"
@@ -49,7 +48,7 @@ onMounted(() => {
             />
           </div>
           <div> 
-            <button @click="isModalShow = true" class="bg-blue-500 border hover:bg-blue-400 text-white px-3 py-2 rounded-lg uppercase text-sm">
+            <button  @click="isModalShow = true" class="bg-blue-500 border hover:bg-blue-400 text-white px-3 py-2 rounded-lg uppercase text-sm">
                 Add To-Do
             </button>      
           </div>
