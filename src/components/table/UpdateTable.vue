@@ -48,7 +48,6 @@ onMounted(() => {
 });
 
 function addTodo(){
-console.log(status.value);
   const newPayload = {
     id: props.mission.id,
     member_id: memberId.value,
@@ -62,10 +61,13 @@ console.log(status.value);
   isEnterLoading.value = true;
   todoStore.updateTodo(newPayload)
   .then(() => {
-    emit('close-modal');
+    emit('close-modal', true);
     })
   .catch((err) => {
-    alert(err.message);
+    emit('close-modal', false);
+  })
+  .finally(() => {
+    isEnterLoading.value = false;
   });
 }
 </script>

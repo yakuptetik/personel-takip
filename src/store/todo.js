@@ -43,7 +43,6 @@ export const useTodoStore = defineStore('mission', () => {
             setTimeout(() => {
               resolve();
               missions.value.push(response.data.mission);
-              localStorage.setItem('missions', JSON.stringify(missions.value));
             }, 1000)
           });
       }	catch (err) {

@@ -59,6 +59,7 @@ function handleAdd() {
     })
     .catch((err) => {
       alert(err.message);
+      emit('close-modal');
     });
 }
 </script>

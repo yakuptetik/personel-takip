@@ -6,6 +6,8 @@ import { useStatusStore } from '../../store/status';
 import UpdateTable from './UpdateTable.vue';
 
 import moment from 'moment'
+import ErrorModal from '../../modals/ErrorModal.vue';
+import SuccesModal from '../../modals/SuccesModal.vue';
 
 
 const projectStore = useProjectStore()
@@ -23,6 +25,8 @@ defineProps({
 });
 
 const isUpdate = ref(false)
+const isErrorModal = ref(false)
+const isSuccessModal = ref(false)
 
 function getProject(projectId) {
   return projectStore.getProject(projectId);
@@ -51,10 +55,24 @@ function handleDelete(missionId) {
         });
 
 }
+function  onUpdated (isSucces){
+  isUpdate.value = false;
+  if(isSucces) {
+    isSuccessModal.value = true
+    setTimeout(() => {
+      isSuccessModal.value = false
+      }, 550)
+  } else {
+    isErrorModal.value = true
+  }
+}
+
 </script>
 
 <template>
-  <UpdateTable :mission="mission" v-if="isUpdate" @close-modal="isUpdate = false"/>
+  <UpdateTable :mission="mission" v-if="isUpdate" @close-modal="onUpdated"/>
+    <ErrorModal v-if="isErrorModal"/>
+    <SuccesModal  v-if="isSuccessModal"/>
 
     <tr v-else class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100 w-full">
         <td class="py-3 px-6 text-left">

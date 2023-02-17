@@ -33,7 +33,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="">
+  <div class="pb-20">
     <div class="flex justify-center bg-gray-100 font-sans overflow-hidden">
       <div class="w-full max-sm:px-5 px-10">
         <div class="flex items-center justify-between pt-3">

@@ -10,12 +10,41 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-const userStore = useUserStore();
-const token = localStorage.getItem('token');
+	const userStore = useUserStore();
+	const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+	const isAuthenticated = userStore.isAuth;
 
-	if(token) {
+	if(to.name !== 'Login' && !token && !isAuthenticated) {
+		next({ name: 'Login', query: { redirect: to.name }});
+
+		return;
+	}
+
+	if(to.name === 'Login' && !token && !isAuthenticated) {
+		next();
+
+		return;
+	}
+
+	if(token && !isAuthenticated && to.name === 'Login') {
 		API.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 		userStore.isAuth = true;
+
+		next({ name: 'Home' });
+		return;
+	}
+
+	if(token && !isAuthenticated) {
+		API.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+		userStore.isAuth = true;
+
+		next();
+		return;
+	}
+
+	if(isAuthenticated && to.name === 'Login') {
+		next({ name: to.name });
+		return;
 	}
 
 	next();
